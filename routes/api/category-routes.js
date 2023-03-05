@@ -8,7 +8,7 @@ const { Category, Product } = require('../../models');
 router.get('/',async (req, res) => {
  try {
     const categoryData = await category.findAll({
-      include: [{ model: Reader }],
+      include: [{ model: Product }],
     });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -20,8 +20,8 @@ router.get('/',async (req, res) => {
 
   router.get('/:id', async (req, res) => {
     try {
-      const categoryData = await category.findByPk(req.params.id, {
-        include: [{ model: Reader }],
+      const categoryData = await Category.findByPk(req.params.id, {
+        include: [{ model: Product }],
       });
   
       if (!categoryData) {
@@ -37,8 +37,8 @@ router.get('/',async (req, res) => {
  // create a new category
  router.post('/', async (req, res) => {
   try {
-    const categoryData = await category.create({
-      reader_id: req.body.reader_id,
+    const categoryData = await Category.create({
+      category_id: req.body.category_id,
     });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -65,7 +65,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   try {
-    const categoryData = await category.destroy({
+    const categoryData = await Category.destroy({
       where: {
         id: req.params.id,
       },
